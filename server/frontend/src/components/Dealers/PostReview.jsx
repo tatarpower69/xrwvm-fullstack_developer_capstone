@@ -51,7 +51,7 @@ const PostReview = () => {
     const res = await fetch(review_url, {
       method: "POST",
       headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json", "X-CSRFToken": document.cookie.split("; ").find(x=>x.startsWith("csrftoken="))?.split("=")[1] || "",
       },
       body: jsoninput,
   });
@@ -121,3 +121,4 @@ const PostReview = () => {
   )
 }
 export default PostReview
+

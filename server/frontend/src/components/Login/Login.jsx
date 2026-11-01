@@ -17,7 +17,7 @@ const Login = ({ onClose }) => {
     const res = await fetch(login_url, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json", "X-CSRFToken": document.cookie.split("; ").find(x=>x.startsWith("csrftoken="))?.split("=")[1] || "",
         },
         body: JSON.stringify({
             "userName": userName,
@@ -72,3 +72,4 @@ const Login = ({ onClose }) => {
 };
 
 export default Login;
+

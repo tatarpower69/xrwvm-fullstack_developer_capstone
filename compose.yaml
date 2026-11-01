@@ -1,0 +1,24 @@
+services:
+  mongo:
+    image: mongo:7
+    volumes: [mongo_data:/data/db]
+  api:
+    build: ./server/database
+    environment:
+      MONGO_URL: mongodb://mongo:27017/dealershipsDB
+    depends_on: [mongo]
+    ports: ["127.0.0.1:3030:3030"]
+  sentiment:
+    build: ./server/djangoapp/microservices
+    ports: ["127.0.0.1:5050:5050"]
+  web:
+    build: ./server
+    environment:
+      backend_url: http://api:3030
+      sentiment_analyzer_url: http://sentiment:5050
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Set DJANGO_SECRET_KEY}
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on: [api, sentiment]
+volumes:
+  mongo_data:
