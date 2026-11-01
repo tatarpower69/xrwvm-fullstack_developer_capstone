@@ -18,6 +18,8 @@ services:
       sentiment_analyzer_url: http://sentiment:5050
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1}
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Set DJANGO_SECRET_KEY}
+      DJANGO_DEBUG: 'false'
+      DJANGO_CSRF_ORIGINS: ${DJANGO_CSRF_ORIGINS:-}
     ports: ["127.0.0.1:8000:8000"]
     depends_on: [api, sentiment]
 volumes:
