@@ -20,8 +20,11 @@ services:
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Set DJANGO_SECRET_KEY}
       DJANGO_DEBUG: 'false'
       DJANGO_CSRF_ORIGINS: ${DJANGO_CSRF_ORIGINS:-}
+      DJANGO_DB_PATH: /data/db.sqlite3
+    volumes: [django_data:/data]
     ports: ["${BIND_ADDRESS:-127.0.0.1}:8000:8000"]
     depends_on: [api, sentiment]
 volumes:
   mongo_data:
+  django_data:
 
