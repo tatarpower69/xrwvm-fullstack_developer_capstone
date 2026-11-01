@@ -11,6 +11,11 @@ from django.views.decorators.http import require_GET, require_POST
 from .models import CarModel
 from .restapis import get_request, post_review, analyze_review_sentiments
 
+@require_GET
+def current_session(request):
+    user = request.user
+    return JsonResponse({'userName': user.username, 'firstName': user.first_name, 'lastName': user.last_name} if user.is_authenticated else {'userName': None})
+
 @require_POST
 def login_user(request):
     try:
